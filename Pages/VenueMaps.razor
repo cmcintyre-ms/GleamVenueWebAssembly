@@ -1,0 +1,23 @@
+﻿@page "/venuemaps"
+@inject IJSRuntime JSRuntime
+
+<h3>VenueMaps</h3>
+
+<div @ref="mapElement" style="width:400px;height:300px"></div>
+
+@code{
+    private ElementReference mapElement;
+    private IJSObjectReference mapModule;
+    private IJSObjectReference mapInstance;
+    private double latitude = 54.603794;
+    private double longitude = -5.931338;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            mapModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./script.js");
+            mapInstance = await mapModule.InvokeAsync<IJSObjectReference>("addMapToElement", mapElement, longitude, latitude);
+        }
+    }
+}

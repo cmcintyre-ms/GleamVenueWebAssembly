@@ -1,0 +1,10 @@
+﻿mutation AddNewReview($description:String, $reviewerEmail:String, $venueID:UUID!){
+	createNewReview(description:$description, reviewerEmail:$reviewerEmail, venueID:$venueID){
+		review{
+			id
+			description
+			reviewersEmail
+			gleamVenueId
+		}
+	}
+}

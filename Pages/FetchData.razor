@@ -1,0 +1,64 @@
+﻿@page "/fetchdata"
+@inject IGleamVenueService GleamVenueService
+@inject NavigationManager NavManager
+
+<div class="main-body-wrap">
+    <div class="main-content">
+        <h1 style="text-align:center;">List of Gleam Venues</h1>
+        <br />
+
+
+        <AuthorizeView>
+            <NotAuthorized>
+                <h1>You must be logged in to view this content</h1>
+            </NotAuthorized>
+            <Authorized>
+                <div>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>City</td>
+                                <td>Description</td>
+                                <td>More Info</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var venue in gleamVenues)
+                            {
+                                <tr>
+                                    <td>@venue.Name</td>
+                                    <td>@venue.Address.City</td>
+                                    <td>@venue.Description</td>
+                                    <td>
+                                        <button class="btn btn-primary" @onclick="@(() => Navigate(venue))">View</button>
+                                        @*<a href="/GleamVenues/@venue.Id">More Info</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+
+@code {
+    public List<GleamVenue> gleamVenues = new List<GleamVenue>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        gleamVenues = await GleamVenueService.GetAllGleamVenues();
+    }
+
+    private void Navigate(GleamVenue venue)
+    {
+        NavManager.NavigateTo($"/GleamVenues/{venue.Id}");
+    }
+
+}
+
+
+

@@ -1,0 +1,10 @@
+﻿query FetchAllVenues{
+	allGleamVenues{
+		id
+		name
+		description
+		address{
+			city
+		}
+	}
+}

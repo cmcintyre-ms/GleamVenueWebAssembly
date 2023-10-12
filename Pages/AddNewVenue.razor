@@ -1,0 +1,78 @@
+﻿@page "/addnewvenue"
+@inject IGleamVenueService venueService
+
+<h3>AddNewVenue</h3>
+
+<EditForm Model="venue" OnSubmit="Save" class="card card-body bg-light mt-5">
+    <div class="mb-3 row">
+        <label for="name" class="col-md-2 col-form-label">Name:</label>
+        <div class="col-md-10">
+            <InputText id="name" class="form-control" @bind-Value="venue.Name" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="description" class="col-md-2 col-form-label">Description:</label>
+        <div class="col-md-10">
+            <InputText id="description" class="form-control" @bind-Value="venue.Description" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="street" class="col-md-2 col-form-label">Street:</label>
+        <div class="col-md-10">
+            <InputText id="street" class="form-control" @bind-Value="venue.Address.Street" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="city" class="col-md-2 col-form-label">City:</label>
+        <div class="col-md-10">
+            <InputText id="city" class="form-control" @bind-Value="venue.Address.City" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="longitude" class="col-md-2 col-form-label">Longitude:</label>
+        <div class="col-md-10">
+            <InputNumber id="longitude" class="form-control" @bind-Value="venue.Address.Longitude" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="latitude" class="col-md-2 col-form-label">Latitude:</label>
+        <div class="col-md-10">
+            <InputNumber id="latitude" class="form-control" @bind-Value="venue.Address.Latitude" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="facebook" class="col-md-2 col-form-label">Facebook:</label>
+        <div class="col-md-10">
+            <InputText id="facebook" class="form-control" @bind-Value="venue.SocialMedia.FacebookLink" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="instagram" class="col-md-2 col-form-label">Instagram:</label>
+        <div class="col-md-10">
+            <InputText id="instagram" class="form-control" @bind-Value="venue.SocialMedia.InstagramHandle" />
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="twitter" class="col-md-2 col-form-label">Twitter:</label>
+        <div class="col-md-10">
+            <InputText id="twitter" class="form-control" @bind-Value="venue.SocialMedia.TwitterHandle" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+    public GleamVenue venue = new GleamVenue();
+
+    public async Task Save()
+    {
+        await venueService.AddNewVenue(venue);
+    }
+
+}

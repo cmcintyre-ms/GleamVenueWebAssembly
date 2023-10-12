@@ -1,0 +1,86 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  allGleamVenues: [GleamVenue]
+  venueById(id: UUID!): GleamVenue
+  filterByCity(city: String): [GleamVenue]
+  reviews(gleamVenueId: UUID!): [Review]
+}
+
+type Mutation {
+  createNewVenue(venue: GleamVenueInput): AddVenuePayload
+  createNewReview(description: String reviewerEmail: String venueID: UUID!): AddReviewPayload
+}
+
+type AddVenuePayload {
+  venue: GleamVenue
+}
+
+type Review {
+  id: UUID!
+  description: String!
+  reviewersEmail: String!
+  gleamVenueId: UUID!
+}
+
+scalar UUID
+
+type GleamVenue {
+  id: UUID!
+  name: String!
+  description: String!
+  address: Address!
+  picturePath: String!
+  socialMedia: SocialMedia!
+  reviews: [Review!]!
+}
+
+input GleamVenueInput {
+  id: UUID!
+  name: String!
+  description: String!
+  address: AddressInput!
+  picturePath: String!
+  socialMedia: SocialMediaInput!
+  reviews: [ReviewInput!]!
+}
+
+type AddReviewPayload {
+  review: Review
+}
+
+input ReviewInput {
+  id: UUID!
+  description: String!
+  reviewersEmail: String!
+  gleamVenueId: UUID!
+}
+
+input SocialMediaInput {
+  facebookLink: String!
+  twitterHandle: String!
+  instagramHandle: String!
+}
+
+input AddressInput {
+  street: String!
+  city: String!
+  longitude: Float!
+  latitude: Float!
+}
+
+type SocialMedia {
+  facebookLink: String!
+  twitterHandle: String!
+  instagramHandle: String!
+}
+
+type Address {
+  street: String!
+  city: String!
+  longitude: Float!
+  latitude: Float!
+}

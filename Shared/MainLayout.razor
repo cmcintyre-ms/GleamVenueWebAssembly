@@ -1,0 +1,85 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+
+
+    <main>
+        <div>
+            <style>
+                .navbar-custom {
+                    background-color:#C5ACEF;
+                }
+                .navbar-custom .navbar-brand,
+                .navbar-custom .navbar-text {
+                    color:#8661C5;
+                }
+                font {
+                    color:#8661C5;
+                }
+            </style>
+           <nav class="navbar navbar-expand navbar-custom">
+                <div class="container-fluid">
+                    <img style="width:9%" src="/images/QueerryName.png" alt="Queerry Name"/>
+                    @*<a class="navbar-brand" href="">GLEAM</a>*@
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <style>
+                            ul {
+                                list-style-type: none;
+                                margin: 0;
+                                padding: 0;
+                                overflow:hidden;
+                                }
+
+                            li {
+                                float: left;
+                            }
+
+                            li a {
+                                display: block;
+                                color:#000;
+                                padding: 14px 16px;
+                                text-decoration: none;
+                                }
+
+                            li a:hover {
+                                background-color:#8661C5;
+                                color: white;
+                                }
+                            li a:active {
+                                background-color:#3B2E58;
+                                color:white;
+                            }
+
+                        </style>
+                        <ul>
+                            <li><a href="">Home</a>
+                           </li>
+                            <li><a href="ListVenuesGraphQL">QUEERRY Venues</a>
+                           </li>
+                            <li><a href="AddNewVenue">Add New Venue</a>
+                           </li>
+                            <li><a href="https://microsoft.sharepoint.com/teams/ERG_GLEAM">More about GLEAM</a>
+                           </li>
+                            <li><a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                           </li>
+                           <li><a href="Reviews">Reviews</a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+
+                    <LoginDisplay />
+
+                </div>
+            </nav>
+
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

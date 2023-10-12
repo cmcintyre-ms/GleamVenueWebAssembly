@@ -1,0 +1,114 @@
+﻿@page "/listvenuesgraphql"
+@inject GleamVenueClient venueClient
+@inject NavigationManager NavManager
+
+        <style> 
+            body {
+                background-color: #DBD0EE;
+                text-align:center;
+            }
+            .btn {
+                background-color:#C5ACEF;
+                color:black;
+            }
+            .btn:hover {
+                background-color:#8661C5;
+                color: white;
+            }
+        </style>
+
+<div>
+    <div>
+        <img style="width:25%; padding-top:-10px" class="logo" src="/images/QueerryVenues.png" alt="QUEERRY Venue Logo" />
+        <br />
+
+        <AuthorizeView>
+            <NotAuthorized>
+                <h1 style="color:#3B2E58">You must be signed in to view this content</h1>
+            </NotAuthorized>
+            <Authorized>
+                <div class="container">
+                    <div class="input-group mb-3">
+                        <input type="text" @bind="SearchByCity" class="form-control" placeholder="Search By City" />
+                        <button class="btn btn-primary" @onclick="OnSearch" type="button" id="button-addon2">Search</button>
+                    </div>
+                </div>
+
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">More Info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in AllVenues)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Address.City</td>
+                                    <td>@item.Description</td>
+                                    <td>
+                                        <button class="btn btn-primary" @onclick="@(() => Navigate(item))">View</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+@code {
+    public List<GleamVenue> AllVenues = new List<GleamVenue>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var results = await venueClient.FetchAllVenues.ExecuteAsync();
+
+        var allVenues = results.Data.AllGleamVenues.Select(v => new GleamVenue
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Description = v.Description,
+                Address =
+                {
+                    City = v.Address.City
+                }
+            });
+
+        this.AllVenues = allVenues.ToList();
+    }
+
+    private void Navigate(GleamVenue venue)
+    {
+        NavManager.NavigateTo($"/GleamVenues/{venue.Id}");
+    }
+
+    public string SearchByCity = string.Empty;
+
+    public async Task OnSearch()
+    {
+        if (!string.IsNullOrEmpty(SearchByCity))
+        {
+            var results = await venueClient.FetchVenueByCity.ExecuteAsync(SearchByCity);
+
+            AllVenues = results.Data.FilterByCity.Select(v => new GleamVenue
+                {
+                    Id = v.Id,
+                    Name = v.Name,
+                    Description = v.Description,
+                    Address =
+                {
+                    City = v.Address.City
+                }
+                }).ToList();
+        }
+    }
+
+}

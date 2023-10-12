@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <GraphQL Remove="GleamVenueGraphQL\AddNewReview.graphql" />
+    <GraphQL Remove="GleamVenueGraphQL\FetchAllVenues.graphql" />
+    <GraphQL Remove="GleamVenueGraphQL\FetchVenueByCity.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="GleamVenueGraphQL\AddNewReview.graphql" />
+    <None Remove="GleamVenueGraphQL\FetchAllVenues.graphql" />
+    <None Remove="GleamVenueGraphQL\FetchVenueByCity.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="GleamVenueGraphQL\AddNewReview.graphql">
+      <Generator>MSBuild:Compile</Generator>
+    </AdditionalFiles>
+    <AdditionalFiles Include="GleamVenueGraphQL\FetchAllVenues.graphql">
+      <Generator>MSBuild:Compile</Generator>
+    </AdditionalFiles>
+    <AdditionalFiles Include="GleamVenueGraphQL\FetchVenueByCity.graphql">
+      <Generator>MSBuild:Compile</Generator>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BlazorGoogleMaps" Version="2.1.0" />
+    <PackageReference Include="Majorsoft.Blazor.Components.Common.JsInterop" Version="1.5.0" />
+    <PackageReference Include="Majorsoft.Blazor.Components.Maps" Version="1.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.3" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="6.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.6.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MudBlazor" Version="6.0.10" />
+    <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.8.0" />
+    <PackageReference Include="StrawberryShake.Transport.Http" Version="12.8.0" />
+  </ItemGroup>
+
+</Project>

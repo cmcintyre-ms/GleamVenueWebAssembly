@@ -1,0 +1,10 @@
+﻿query FetchVenueByCity($cityQuery:String){
+	filterByCity(city:$cityQuery){
+		id
+		name
+		description
+		address{
+			city
+		}
+	}
+}

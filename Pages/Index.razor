@@ -1,0 +1,86 @@
+﻿@page "/"
+
+
+<PageTitle>Home Page</PageTitle>
+<style> 
+    body {
+        background-color: #DBD0EE;
+        text-align:center;
+    }
+    .btn {
+        text-align:center;
+        margin: auto;
+        justify-content:center;
+        align-items: center;
+        background-color:#C5ACEF;
+        color:black;
+    }
+    .btn:hover {
+        background-color:#8661C5;
+        color: white;
+    }
+</style>
+<div>
+    <div>
+        <div>
+            <img style="width:35%" class="logo" src="/images/Queerry.png" alt="QUEERRY Logo" />
+        <h1 style="color:#3B2E58; text-align:center">
+            Find Your New Favourite LGBTQ+ Friendly Venue
+        </h1>
+
+        <p style="color:#8661C5; text-align:center">
+            This app is designed by Microsoft Employees, for Microsoft Employees both in GLEAM and in the wider community. Simply enter the name of the city that you are visiting and hit 'Search'
+            to see a list of all the venues that have made themselves known to be LGBTQ+ friendly, or have been recommended by our followers
+        </p>
+         <a style= "text-align:center" href="ListVenuesGraphQL" class="btn btn-secondary" >Search your local QUEERRY venues</a>
+        <br />
+        </div>
+    </div>
+</div>
+
+<br/>
+<br/>
+
+<style>
+    .btn {
+        text-align:center;
+        margin: auto;
+        justify-content:center;
+        align-items: center;
+        background-color:#8661C5;
+        color:white;
+    }
+    .btn:hover {
+        background-color:#3B2E58;
+        color: white;
+    }
+</style>
+<div class="row row-cols-1 row-cols-md-2 g-2">
+    <div class="col">
+        <div class="card text-center" style="background-color:#C5ACEF">
+            <img src="/images/Review.png" class="card-img-top" alt=""  height="400" />
+            <div class="card-body">
+                <h5 class="card-title"  style="color:#3B2E58; text-align:center">Leave a review</h5>
+                <p class="card-text"  style="color:#3B2E58; text-align:center">Read what other people think of venues near you, and leave a review to let people know what you think! </p>
+                <a href="" class="btn btn-secondary" >Leave & search reviews</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-center" style="background-color:#C5ACEF">
+            <img src="/images/7b7946f6-f3d3-4511-be0b-d5bfec4d270b.jpg" class="card-img-top" alt="" height="400"/>
+            <div class="card-body">
+                <h5 class="card-title"  style="color:#3B2E58; text-align:center">Venue of the Month</h5>
+                <p class="card-text"  style="color:#3B2E58; text-align:center">This months QUEERRY venue of the month, could this be your new favourite LGBTQ+ friendly venue?</p>
+                <a href="" class="btn btn-secondary" >View Venue of the Month</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+
+@code {
+    private GleamVenue gleamVenue = new GleamVenue();
+}
+

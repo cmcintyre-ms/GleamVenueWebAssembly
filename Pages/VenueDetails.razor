@@ -1,0 +1,91 @@
+﻿@page "/GleamVenues/{id:guid}"
+@inject IGleamVenueService GleamVenueService
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<div class="main-body-wrap">
+    <div class="main-content">
+        <h1 style="text-align:center;">@venue.Name</h1>
+
+        <AuthorizeView>
+            <NotAuthorized>
+                <h1>You must be logged in to view this content</h1>
+            </NotAuthorized>
+            <Authorized>
+                <div class="media">
+                    <div class="media-img-big-wrapper mr-2">
+                        <img class="media-img-big" src="https://placekitten.com/640/360" alt="Placeholder image" />
+                    </div>
+                    <div class="media-body">
+                        <div class="row row-cols-1 row-cols-lg-2 g-2">
+                            <div class="col">
+                                <h5 style="text-align:center; font-weight:bold">Description</h5>
+                                <p style="text-align:center; padding-bottom:5px;">@venue.Description</p>
+                                
+                                <h5 style="text-align:center; font-weight:bold">Address</h5>
+                                <p style="text-align:center;">Street:- @venue.Address.Street</p>
+                                <p style="text-align:center;">City:- @venue.Address.City</p>
+
+                                <h5 style="text-align:center; font-weight:bold">Social Media</h5>
+                                <p style="text-align:center;"><i class="fa-brands fa-facebook" /><a href="@venue.SocialMedia.FacebookLink"> Facebook</a></p>
+                                <p style="text-align:center;"><i class="fa-brands fa-instagram-square"></i><a href="@venue.SocialMedia.InstagramHandle"> Instagram</a></p>
+                                <p style="text-align:center;"><i class="fa-brands fa-twitter"></i><a href="@venue.SocialMedia.TwitterHandle"> Twitter</a></p>
+                                
+                                <h5 style="text-align:center; font-weight:bold;">Reviews</h5>
+                                @foreach (var review in @venue.Reviews)
+                               {
+                                   <p style="text-align:center">Description:- @review.Description</p>
+                                   <p style="text-align:center">Reviewers Email:- @review.ReviewersEmail</p>
+                                   <hr/>
+                               }
+                            </div>
+
+                            <div class="col">
+                                <div @ref="mapElement" style="width:500px;height:500px"></div>
+                            </div>
+                        </div>
+
+                        <a class="btn btn-secondary btn-lg" href="listvenuesgraphql">Go Back</a>
+                    </div>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+@code {
+    private GleamVenue venue { get; set; } = new GleamVenue();
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        venue = await GleamVenueService.GetGleamVenueById(Id);
+    }
+
+    // Map View
+    private ElementReference mapElement;
+    private IJSObjectReference mapModule;
+    private IJSObjectReference mapInstance;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        mapModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./script.js");
+        mapInstance = await mapModule.InvokeAsync<IJSObjectReference>("addMapToElement", mapElement, venue.Address.Longitude, venue.Address.Latitude);
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (mapModule is not null)
+        {
+            await mapModule.DisposeAsync();
+        }
+
+        if (mapInstance is not null)
+        {
+            await mapInstance.DisposeAsync();
+        }
+    }
+}
